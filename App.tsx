@@ -27,7 +27,7 @@ const App: React.FC = () => {
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
       
       {/* Profile Section */}
-      <div className="w-full max-w-md flex flex-col items-center mb-8 animate-[fadeIn_0.6s_ease-out]">
+      <div className="w-full max-w-md flex flex-col items-center mb-8 animate-fade-in">
         <div className="relative mb-4 group">
           <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 p-1 animate-glow transition-transform group-hover:scale-105 duration-500">
             <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
@@ -45,7 +45,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Services Section */}
-      <div className="w-full max-w-md flex flex-col gap-4 z-10">
+      <div className="w-full max-w-md flex flex-col gap-4 z-10 animate-fade-in" style={{ animationDelay: '0.2s' }}>
         <ServiceCard 
           title="Assistência Técnica"
           subtitle="Computadores, Impressoras e Redes"

@@ -16,7 +16,8 @@
             color: #f8fafc;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent scrolling for the single-page look */
+            overflow: hidden;
+            height: 100vh;
         }
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
@@ -33,19 +34,30 @@
             from { box-shadow: 0 0 10px -2px rgba(56, 189, 248, 0.3); }
             to { box-shadow: 0 0 25px 2px rgba(56, 189, 248, 0.5); }
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
     </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.463.0?external=react",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
 </head>
 <body>
     <div id="root"></div>
+    <!-- O script abaixo é essencial para carregar o seu código React -->
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
