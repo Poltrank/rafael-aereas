@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rafael Areas - Especialista</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,8 +16,9 @@
             color: #f8fafc;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            height: 100vh;
+            /* Permitir rolagem apenas se o conteúdo exceder a tela dinâmica */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
@@ -57,7 +58,6 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- O script abaixo é essencial para carregar o seu código React -->
     <script type="module" src="./index.tsx"></script>
 </body>
 </html>
