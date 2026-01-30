@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Monitor, 
   Printer, 
@@ -11,19 +11,29 @@ import {
   Lock,
   X,
   Save,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Info
 } from 'lucide-react';
 import WhatsAppButton from './components/WhatsAppButton';
 import ServiceCard from './components/ServiceCard';
+
+/**
+ * CONFIGURAÇÃO GLOBAL: 
+ * O link da sua foto foi inserido abaixo.
+ * Agora ela aparecerá para TODOS os seus clientes que acessarem o site.
+ */
+const GLOBAL_PROFILE_IMAGE = "https://i.postimg.cc/zDL2Jc6S/69f24fcb-0b14-449e-a5a5-d2eaa2700c16.jpg"; 
 
 const App: React.FC = () => {
   const PHONE_NUMBER = "5522998163863";
   const ADMIN_PASSWORD = "sempiramide";
 
-  // Estados para Admin e Foto
-  const [photoUrl, setPhotoUrl] = useState<string>(localStorage.getItem('rafael_areas_photo') || '');
+  // Inicializa com a foto global. O localStorage pode ser usado para testes de novos links antes de oficializar no código.
+  const [photoUrl, setPhotoUrl] = useState<string>(
+    GLOBAL_PROFILE_IMAGE || localStorage.getItem('rafael_areas_photo') || ''
+  );
+  
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [password, setPassword] = useState('');
   const [tempPhotoUrl, setTempPhotoUrl] = useState(photoUrl);
   const [isLogged, setIsLogged] = useState(false);
 
@@ -47,9 +57,11 @@ const App: React.FC = () => {
   };
 
   const savePhoto = () => {
+    // Salva localmente para preview imediato no navegador atual
     localStorage.setItem('rafael_areas_photo', tempPhotoUrl);
     setPhotoUrl(tempPhotoUrl);
     setIsAdminOpen(false);
+    alert("Preview atualizado com sucesso!");
   };
 
   return (
@@ -61,17 +73,22 @@ const App: React.FC = () => {
       <div className="w-full flex flex-col items-center">
         {/* Profile Section */}
         <div className="w-full max-w-md flex flex-col items-center mb-6 sm:mb-8 animate-fade-in">
-          <div className="relative mb-3 group">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-400 p-1 animate-glow transition-transform group-hover:scale-105 duration-500 shadow-2xl">
-              <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
+          <div className="relative mb-4 group">
+            {/* Formato Quadrado Arredondado (estilo Tech Moderno) */}
+            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-[2.5rem] bg-gradient-to-tr from-blue-600 to-cyan-400 p-1 animate-glow transition-all group-hover:scale-105 group-hover:rotate-2 duration-500 shadow-2xl">
+              <div className="w-full h-full rounded-[2.2rem] bg-slate-900 flex items-center justify-center overflow-hidden">
                  {photoUrl ? (
                    <img src={photoUrl} alt="Rafael Areas" className="w-full h-full object-cover" />
                  ) : (
-                   <span className="text-3xl sm:text-4xl font-bold text-white font-mono tracking-tighter">RA</span>
+                   <div className="flex flex-col items-center">
+                      <span className="text-3xl sm:text-4xl font-bold text-white font-mono tracking-tighter">RA</span>
+                      <span className="text-[10px] text-blue-400 font-mono mt-1 opacity-50">TECH</span>
+                   </div>
                  )}
               </div>
             </div>
-            <div className="absolute bottom-1 right-2 bg-green-500 w-4 h-4 rounded-full border-2 border-slate-950"></div>
+            {/* Status Online Indicator */}
+            <div className="absolute bottom-2 right-2 bg-green-500 w-5 h-5 rounded-full border-4 border-slate-950 shadow-lg"></div>
           </div>
           
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-1">Rafael Areas</h1>
@@ -116,54 +133,65 @@ const App: React.FC = () => {
           Soluções rápidas e eficientes
         </p>
         
-        {/* Hidden Lock Icon */}
         <button 
           onClick={handleAdminAccess}
-          className="opacity-10 hover:opacity-100 transition-opacity duration-500 text-slate-400"
+          className="opacity-5 hover:opacity-100 transition-opacity duration-1000 text-slate-700 hover:text-blue-400 py-2 px-4"
           title="Acesso ADM"
         >
-          <Lock size={12} />
+          <Lock size={14} />
         </button>
       </div>
 
       {/* Admin Modal */}
       {isAdminOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-          <div className="glass w-full max-w-sm p-6 rounded-3xl relative">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl animate-fade-in">
+          <div className="glass w-full max-w-sm p-8 rounded-[2.5rem] relative border-blue-500/20 shadow-2xl">
             <button 
               onClick={() => setIsAdminOpen(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors"
             >
-              <X size={20} />
+              <X size={24} />
             </button>
             
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400">
-                <ImageIcon size={20} />
+            <div className="flex items-center gap-3 mb-8">
+              <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-400">
+                <ImageIcon size={24} />
               </div>
-              <h2 className="text-xl font-bold text-white">Configurações</h2>
+              <div>
+                <h2 className="text-xl font-bold text-white">Configurações</h2>
+                <p className="text-xs text-slate-500 font-mono uppercase tracking-wider">Painel do Especialista</p>
+              </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
+              <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20 flex gap-3">
+                <Info size={20} className="text-blue-400 shrink-0" />
+                <p className="text-[11px] text-blue-200/80 leading-relaxed">
+                  A imagem global já foi configurada no sistema. Use este campo para testar novos links antes de pedir a atualização definitiva.
+                </p>
+              </div>
+
               <div>
-                <label className="block text-xs font-mono text-slate-400 uppercase tracking-widest mb-2">
-                  Link da Foto de Perfil
+                <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em] mb-3 ml-1">
+                  URL da Foto na Nuvem (Teste Local)
                 </label>
-                <input 
-                  type="text" 
-                  value={tempPhotoUrl}
-                  onChange={(e) => setTempPhotoUrl(e.target.value)}
-                  placeholder="https://link-da-sua-foto.com/imagem.jpg"
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
-                />
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    value={tempPhotoUrl}
+                    onChange={(e) => setTempPhotoUrl(e.target.value)}
+                    placeholder="https://link-da-foto.com/perfil.jpg"
+                    className="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-sm text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-700"
+                  />
+                </div>
               </div>
 
               <button 
                 onClick={savePhoto}
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-blue-600/20"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-blue-900/20"
               >
-                <Save size={18} />
-                Salvar Alterações
+                <Save size={20} />
+                Visualizar no meu celular
               </button>
             </div>
           </div>
@@ -173,8 +201,8 @@ const App: React.FC = () => {
       {/* WhatsApp Action */}
       <WhatsAppButton phoneNumber={PHONE_NUMBER} />
 
-      {/* Bottom accent line for Desktop */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-blue-600 rounded-t-full shadow-[0_-4px_20px_rgba(37,99,235,0.4)] hidden sm:block"></div>
+      {/* Bottom decorative bar */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30 rounded-full"></div>
     </div>
   );
 };
